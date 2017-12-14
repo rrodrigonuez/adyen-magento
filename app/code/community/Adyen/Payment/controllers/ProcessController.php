@@ -498,7 +498,6 @@ class Adyen_Payment_ProcessController extends Mage_Core_Controller_Front_Action 
     }
 
     public function jsonAction() {
-        $this->_adyenHelper = Mage::helper('adyen');
         try {
             $notificationItems = json_decode(file_get_contents('php://input'), true);
 
@@ -516,7 +515,7 @@ class Adyen_Payment_ProcessController extends Mage_Core_Controller_Front_Action 
                 $cronCheckTest = $notificationItems['notificationItems'][0]['NotificationRequestItem']['pspReference'];
                 // Run the query for checking unprocessed notifications, do this only for test notifications coming from the Adyen Customer Area
                 if ($this->_isTestNotification($cronCheckTest)) {
-                    $unprocessedNotifications = $this->_adyenHelper->getUnprocessedNotifications();
+                    $unprocessedNotifications = Mage::helper('adyen')->getUnprocessedNotifications();
                     if ($unprocessedNotifications > 0) {
                         $acceptedMessage .= "\nYou have " . $unprocessedNotifications . " unprocessed notifications.";
                     }
