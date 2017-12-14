@@ -590,7 +590,6 @@ class Adyen_Payment_Helper_Data extends Mage_Payment_Helper_Data
         // get collection of unprocessed notifications
         $collection = Mage::getModel('adyen/event_queue')->getCollection()
             ->addFieldToFilter('created_at', array(
-                'from' => strtotime('-1 day', time()),
                 'to' => strtotime('-10 minutes', time()),
                 'datetime' => true));
 

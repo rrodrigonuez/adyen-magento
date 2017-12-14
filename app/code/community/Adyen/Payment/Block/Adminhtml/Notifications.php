@@ -19,8 +19,12 @@ class Adyen_Payment_Block_Adminhtml_Notifications extends Mage_Adminhtml_Block_T
     {
        //check if it is after first login
         if($this->_authSession->isFirstPageAfterLogin()) {
+            //get store timezone
+            $timezone = new DateTimeZone(Mage::getStoreConfig(
+                Mage_Core_Model_Locale::XML_PATH_DEFAULT_TIMEZONE
+            ));
             // do logic and put in session if no result destroy it from the session
-            $this->_dateChecked = new DateTime(Mage::getStoreConfig('general/locale/timezone'));
+            $this->_dateChecked = new DateTime('now', $timezone);
             $this->_cronCheck = $this->_adyenHelper->getUnprocessedNotifications();
             $this->setSessionData("cronCheck", $this->_cronCheck);
             $this->setSessionData("dateChecked", $this->_dateChecked);
