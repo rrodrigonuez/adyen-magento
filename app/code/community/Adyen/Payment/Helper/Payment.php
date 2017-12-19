@@ -369,7 +369,7 @@ class Adyen_Payment_Helper_Payment extends Adyen_Payment_Helper_Data
 
     public function explodeArrayToRequestFields($adyFields, $name, $items)
     {
-        if (is_array($items)) {
+        if (!empty($items) && is_array($items)) {
             foreach ($items as $field => $value) {
                 $adyFields[$name . '.' . $field] = $value;
             }
@@ -607,9 +607,9 @@ class Adyen_Payment_Helper_Payment extends Adyen_Payment_Helper_Data
      */
     public function getHppDeliveryAddressDetails($deliveryAddress)
     {
-        if (!is_object($deliveryAddress)) {
-            // Gift Cards don't have delivery addresses, this prevents member function calls on non-object errors
-            return $deliveryAddress;
+        // Gift Cards and downloadable products don't have delivery addresses
+        if (!$deliveryAddress) {
+            return null;
         }
 
         $deliveryAddressRequest = [
