@@ -369,7 +369,7 @@ class Adyen_Payment_Helper_Payment extends Adyen_Payment_Helper_Data
 
     public function explodeArrayToRequestFields($adyFields, $name, $items)
     {
-        if (!empty($items) && is_array($items)) {
+        if (is_array($items)) {
             foreach ($items as $field => $value) {
                 $adyFields[$name . '.' . $field] = $value;
             }
@@ -561,12 +561,12 @@ class Adyen_Payment_Helper_Payment extends Adyen_Payment_Helper_Data
     public function getHppBillingAddressDetails($billingAddress)
     {
         $billingAddressRequest = [
-            'street' => 'NA',
-            'houseNumberOrName' => 'NA',
-            'city' => 'NA',
-            'postalCode' => 'NA',
-            'stateOrProvince' => 'NA',
-            'country' => 'NA'
+            'street' => 'N/A',
+            'houseNumberOrName' => 'N/A',
+            'city' => 'N/A',
+            'postalCode' => 'N/A',
+            'stateOrProvince' => 'N/A',
+            'country' => 'N/A'
         ];
 
         if(trim($this->getStreet($billingAddress,true)->getName()) != "") {
@@ -608,16 +608,16 @@ class Adyen_Payment_Helper_Payment extends Adyen_Payment_Helper_Data
     public function getHppDeliveryAddressDetails($deliveryAddress)
     {
         // Gift Cards and downloadable products don't have delivery addresses
-        if (!$deliveryAddress) {
+        if (!is_object($deliveryAddress)) {
             return null;
         }
 
         $deliveryAddressRequest = [
-            'street' => 'NA',
-            'houseNumberOrName' => 'NA',
-            'city' => 'NA',
-            'postalCode' => 'NA',
-            'stateOrProvince' => 'NA',
+            'street' => 'N/A',
+            'houseNumberOrName' => 'N/A',
+            'city' => 'N/A',
+            'postalCode' => 'N/A',
+            'stateOrProvince' => 'N/A',
             'country' => 'N/A'
         ];
 
